@@ -28,10 +28,6 @@ npm install --save @doreentseng/passwd
 ## Usage
 
 ```jsx
-import React from 'react';
-
-import { generate, validate } from '@doreentseng/passwd';
-
 import React, { useEffect, useState } from 'react'
 import { generate, validate } from '@doreentseng/passwd'
 
