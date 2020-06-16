@@ -1,6 +1,6 @@
 {
   "name": "@doreentseng/passwd",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Random password generator and validation.",
   "author": "Doreen Tseng <doreentseng52@gmail.com>",
   "license": "MIT",

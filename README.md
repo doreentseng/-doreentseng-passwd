@@ -4,12 +4,15 @@
 
 [![NPM](https://img.shields.io/npm/v/@doreentseng/passwd.svg)](https://www.npmjs.com/package/@doreentseng/passwd) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-## Notice
+## !!!Notice
 This npm is still developing. 
 1. It follows the static rules so far.
 2. When the password is not valid, it returns a static sentence.
 
 I'm going to fix these two problems in the late version.
+
+## DEMO
+<https://codesandbox.io/s/doreentsengpasswd-b3hk3>
 
 ## Rules so far
 A random password with the following rules:
