@@ -1,4 +1,3 @@
-import { generate } from './generate';
-import { validate } from './validate';
+import { generate, validate } from './main';
 
 export { generate, validate }

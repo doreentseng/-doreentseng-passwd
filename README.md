@@ -1,26 +1,25 @@
 # @doreentseng/passwd
 
-> Random password generator and validation.
+> Random Password Generator and Validation.
 
 [![NPM](https://img.shields.io/npm/v/@doreentseng/passwd.svg)](https://www.npmjs.com/package/@doreentseng/passwd) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-## !!!Notice
-This npm is still developing. 
-1. It follows the static rules so far.
-2. When the password is not valid, it returns a static sentence.
+## Features
 
-I'm going to fix these two problems in the late version.
+### Random Password Generator
+- Fixed Length
+- Maximum Length and Minimum Length
+- Custom Characters
+
+### Password Validation
+- Validata Empty 
+- Validate Length
+- Validate Characters
+- Custom Error Messages
 
 ## DEMO
-<https://codesandbox.io/s/doreentsengpasswd-b3hk3>
 
-## Rules so far
-A random password with the following rules:
-1. 8~16 long
-2. At least 1 uppercase letter, 1 lower case letter and 1 number
-3. At least 1 symbol ~!@#$%^&*()-_+
-4. Spaces not allowed
-5. The first character cannot be a number or a symbol
+Link: <https://codesandbox.io/s/random-password-generator-npm-o1253>
 
 ## Install
 
@@ -30,23 +29,27 @@ npm install --save @doreentseng/passwd
 
 ## Usage
 
+### Generation
+
 ```jsx
-import React, { useEffect, useState } from 'react'
-import { generate, validate } from '@doreentseng/passwd'
+import React, { useEffect, useState } from 'react';
+import { generate } from '@doreentseng/passwd';
 
 const Example = () => {
   const [passwd, setPasswd] = useState('');
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    let updated = validate(passwd);
-    if (!updated) updated = 'OK';
-    setError(updated);
-  }, [passwd])
 
   const onClickGenerate = () => {
-    setPasswd(generate);
-  }
+    setPassword(
+      generatePassword({
+        uppercase: true, // default is true so this line can be removed
+        lowercase: false, // the password will not contain any lowercase
+        // numbers: true, // default is true so this line can be removed
+        symbols: "_-@!", // custom symbols
+        maxLength: 20,
+        minLength: 8
+      })
+    );
+  };
 
   const handleChange = e => {
     const value = e.target.value;
@@ -57,13 +60,165 @@ const Example = () => {
     <div>
       <input value={passwd} onChange={handleChange} />
       <br />
-      <b>{error}</b>
       <button onClick={onClickGenerate}>Generate</button>
     </div>
   )
 }
-export default Example
+export default Example;
 ```
+
+### Validation
+```jsx
+validation({ value, ...rules }); // error codes array: ["101", "103"]
+```
+
+```jsx
+import React, { useEffect, useState } from 'react';
+import { generate } from "./password";
+
+const Example {
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState([]);
+
+  const maxLength = 20;
+  const minLength = 8;
+
+  const rules = useMemo(
+    () => ({
+      uppercase: true, // default is true so this line can be removed
+      lowercase: true, // the password will not contain any lowercase
+      // numbers: true, // default is true so this line can be removed
+      symbols: "_-@!", // custom symbols
+      maxLength,
+      minLength
+    }),
+    []
+  );
+
+  /** 
+   * validation returns error codes, you can edit your error messages
+   * e.g. ['101', '103']
+   */
+  const handleError = (codes) => {
+    let errors = [];
+    for (let i = 0; i < codes.length; i++) {
+      switch (codes[i]) {
+        case "101":
+          errors.push("Required");
+          break;
+        case "102":
+          if (minLength === maxLength) {
+            errors.push(`Must be ${minLength} characters.`);
+          } else {
+            errors.push(`Must be between ${minLength}~${maxLength} characters.`);
+          }
+          break;
+        case "103":
+          errors.push("At least one uppercase.");
+          break;
+        case "104":
+          errors.push("At least one lowercase.");
+          break;
+        case "105":
+          errors.push("At least one number.");
+          break;
+        case "106":
+          errors.push("At least one symbol.");
+          break;
+        case "107":
+          errors.push("No other characters are allowed.");
+          break;
+        default:
+          break;
+      }
+    }
+    return errors;
+  };
+
+  useEffect(() => {
+    const errorCodes = validate({
+      value: password,
+      ...rules
+    });
+    const errorList = handleError(errorCodes);
+    setError(errorList);
+  }, [password, rules]);
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+  };
+
+  return (
+    <div id="main">
+      <h3>Random password generator</h3>
+      <ol>
+        <li>Must be between 8~20 characters.</li>
+        <li>At least one upper-case, one lower-case and one number.</li>
+        <li>
+          At least one of these special characters: - or _. No other special
+          characters are allowed.
+        </li>
+      </ol>
+      <div id="container-passwd">
+        <input value={password} onChange={handleChange} />
+      </div>
+      <p style={{ textAlign: "center" }}>Password length: {password.length}</p>
+
+      {!!error && error.length > 0 ? (
+        <ul>
+          {error.map((item, i) => (
+            <li key={i} style={{ color: "red" }}>
+              {item}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p style={{ textAlign: "center", color: "green" }}>OK</p>
+      )}
+    </div>
+  );
+}
+```
+
+## Props
+
+**Notice!** If you use `generate()` and `validate()` on the same password, you should make sure their props are the same.
+
+### Generator Props
+
+**Notice!** If `maxLength` is the same with `minLength`, the password will get a fixed length.
+
+| Name | Required | Default Value | Type | Description |
+| ------ | ------ | ------ | ------ | ------ |
+| uppercase |  | true | Boolean/String | By default `true`, the password will contain uppercase `ABCDEFGHJKLMNPQRZTUVWXYZ` (without I, O). If set `false`, the password will not contain any uppercase character. You can customize it like `{uppercase: "ABC"}` |
+| lowercase |  | true | Boolean/String | By default `true`, the password will contain lowercase `abcdefghijkmnopqrstuvwxyz` (without l). If set `false`, the password will not contain any lowercase character. You can customize it like `{lowercase: "abc"}` |
+| numbers |  | true | Boolean/String | By default `true`, the password will contain numbers `123456789` (without 0). If set `false`, the password will not contain any number. You can customize it like `{numbers: "012"}` |
+| symbols |  | true | Boolean/String | By default `true`, the password will contain symbols `-_`. If set `false`, the password will not contain any symbol. You can customize it like `{symbols: "-_@!"}` |
+| maxLength | √ |  | Integer | The maximum length of the password. At least `4`.
+| minLength | √ |  | Integer | The maximum length of the password. At least `4`.
+
+### Validation Props
+| Name | Required | Default Value | Type | Description |
+| ------ | ------ | ------ | ------ | ------ |
+| value | √ | | String | Password value |
+| uppercase <td colspan=4>The same as **Generator Props**.</td>
+| lowercase <td colspan=4>The same as **Generator Props**.</td>
+| numbers <td colspan=4>The same as **Generator Props**.</td>
+| symbols <td colspan=4>The same as **Generator Props**.</td>
+| maxLength <td colspan=4>The same as **Generator Props**.</td>
+| minLength <td colspan=4>The same as **Generator Props**.</td>
+
+### Validation Error Codes
+| Code | Description |
+| ------ | ------ |
+| 101 | The password is required. |
+| 102 | Length does not match. |
+| 103 | Uppercase does not match. |
+| 104 | Lowercase does not match. |
+| 105 | Numbers does not match. |
+| 106 | Symbols does not match. |
+| 107 | Other characters are not allowed. |
 
 ## License
 
