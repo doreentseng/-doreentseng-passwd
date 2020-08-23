@@ -1,8 +1,10 @@
+
 # @doreentseng/passwd
 
 > Random Password Generator and Validation.
 
-[![NPM](https://img.shields.io/npm/v/@doreentseng/passwd.svg)](https://www.npmjs.com/package/@doreentseng/passwd) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/@doreentseng/passwd.svg)](https://www.npmjs.com/package/@doreentseng/passwd)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Features
 
@@ -19,19 +21,19 @@
 
 ## DEMO
 
-Link: <https://codesandbox.io/s/random-password-generator-npm-o1253>
+Link: [https://codesandbox.io/s/random-password-generator-npm-o1253](<https://codesandbox.io/s/random-password-generator-npm-o1253> "doreentseng")
 
 ## Install
 
-```bash
+~~~ shell_session
 npm install --save @doreentseng/passwd
-```
+~~~ 
 
 ## Usage
 
 ### Generation
 
-```jsx
+~~~ javascript
 import React, { useEffect, useState } from 'react';
 import { generate } from '@doreentseng/passwd';
 
@@ -65,14 +67,15 @@ const Example = () => {
   )
 }
 export default Example;
-```
+~~~
 
 ### Validation
-```jsx
-validation({ value, ...rules }); // error codes array: ["101", "103"]
-```
 
-```jsx
+~~~ javascript
+validation({ value, ...rules }); // error codes array: ["101", "103"]
+~~~
+
+~~~ javascript
 import React, { useEffect, useState } from 'react';
 import { generate } from "./password";
 
@@ -179,46 +182,50 @@ const Example {
     </div>
   );
 }
-```
+~~~
 
 ## Props
 
-**Notice!** If you use `generate()` and `validate()` on the same password, you should make sure their props are the same.
+***Notice!** If you use `generate()` and `validate()` on the same password, you should make sure their props are the same.
 
 ### Generator Props
 
-**Notice!** If `maxLength` is the same with `minLength`, the password will get a fixed length.
+***Notice!** If `maxLength` is the same with `minLength`, the password will get a fixed length.
 
-| Name | Required | Default Value | Type | Description |
-| ------ | ------ | ------ | ------ | ------ |
-| uppercase |  | true | Boolean/String | By default `true`, the password will contain uppercase `ABCDEFGHJKLMNPQRZTUVWXYZ` (without I, O). If set `false`, the password will not contain any uppercase character. You can customize it like `{uppercase: "ABC"}` |
-| lowercase |  | true | Boolean/String | By default `true`, the password will contain lowercase `abcdefghijkmnopqrstuvwxyz` (without l). If set `false`, the password will not contain any lowercase character. You can customize it like `{lowercase: "abc"}` |
-| numbers |  | true | Boolean/String | By default `true`, the password will contain numbers `123456789` (without 0). If set `false`, the password will not contain any number. You can customize it like `{numbers: "012"}` |
-| symbols |  | true | Boolean/String | By default `true`, the password will contain symbols `-_`. If set `false`, the password will not contain any symbol. You can customize it like `{symbols: "-_@!"}` |
-| maxLength | √ |  | Integer | The maximum length of the password. At least `4`.
-| minLength | √ |  | Integer | The maximum length of the password. At least `4`.
+| Name      | Required | Default Value | Type           | Description |
+|-----------|:--------:|:-------------:|:--------------:|-------------|
+| uppercase |          | true          | Boolean/String | By default `true`, the password will contain uppercase `ABCDEFGHJKLMNPQRZTUVWXYZ` (without I, O). If set `false`, the password will not contain any uppercase character. You can customize it like `{uppercase: "ABC"}` |
+| lowercase |          | true          | Boolean/String | By default `true`, the password will contain lowercase `abcdefghijkmnopqrstuvwxyz` (without l). If set `false`, the password will not contain any lowercase character. You can customize it like `{lowercase: "abc"}` |
+| numbers   |          | true          | Boolean/String | By default `true`, the password will contain numbers `123456789` (without 0). If set `false`, the password will not contain any number. You can customize it like `{numbers: "012"}` |
+| symbols   |          | true          | Boolean/String | By default `true`, the password will contain symbols `-_`. If set `false`, the password will not contain any symbol. You can customize it like `{symbols: "-_@!"}` |
+| maxLength | √        |               | Integer        | The maximum length of the password. At least `4`.
+| minLength | √        |               | Integer        | The maximum length of the password. At least `4`.
 
 ### Validation Props
-| Name | Required | Default Value | Type | Description |
-| ------ | ------ | ------ | ------ | ------ |
-| value | √ | | String | Password value |
-| uppercase <td colspan=4>The same as **Generator Props**.</td>
-| lowercase <td colspan=4>The same as **Generator Props**.</td>
-| numbers <td colspan=4>The same as **Generator Props**.</td>
-| symbols <td colspan=4>The same as **Generator Props**.</td>
-| maxLength <td colspan=4>The same as **Generator Props**.</td>
-| minLength <td colspan=4>The same as **Generator Props**.</td>
+
+***Notice!** Props `uppercase`, `lowercase`, `numbers` and `symbols` are totally the same as in **Generator Props**.
+
+| Name      | Required | Default Value | Type           | Description                      |
+|-----------|:--------:|:-------------:|:--------------:|----------------------------------|
+| value     |   √      |               | String         | Password value.                  |
+| uppercase |          | true          | Boolean/String | The same as **Generator Props**. |
+| lowercase |          | true          | Boolean/String | The same as **Generator Props**. |
+| numbers   |          | true          | Boolean/String | The same as **Generator Props**. |
+| symbols   |          | true          | Boolean/String | The same as **Generator Props**. |
+| maxLength |   √      |               | Integer        | The same as **Generator Props**. |
+| minLength |   √      |               | Integer        | The same as **Generator Props**. |
 
 ### Validation Error Codes
-| Code | Description |
-| ------ | ------ |
-| 101 | The password is required. |
-| 102 | Length does not match. |
-| 103 | Uppercase does not match. |
-| 104 | Lowercase does not match. |
-| 105 | Numbers does not match. |
-| 106 | Symbols does not match. |
-| 107 | Other characters are not allowed. |
+
+| Code | Description                       |
+|------|-----------------------------------|
+| 101  | The password is required.         |
+| 102  | Length does not match.            |
+| 103  | Uppercase does not match.         |
+| 104  | Lowercase does not match.         |
+| 105  | Numbers does not match.           |
+| 106  | Symbols does not match.           |
+| 107  | Other characters are not allowed. |
 
 ## License
 
