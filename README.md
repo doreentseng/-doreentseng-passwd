@@ -1,5 +1,5 @@
 
-# @doreentseng/passwd
+# @doreentseng/react-passwd
 
 > Random Password Generator and Validation.
 
