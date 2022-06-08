@@ -11,7 +11,7 @@ function detectError({ maxLength, minLength }) {
 let upperPool = "ABCDEFGHJKLMNPQRZTUVWXYZ"; // without I, O
 let lowerPool = "abcdefghijkmnopqrstuvwxyz"; // without l
 let numberPool = "123456789"; // without 0
-let symbolPool = "!@#$%^&*-_";
+let symbolPool = "_-";
 
 function generateRandomPassword({
     uppercase = true, // false or undefined means default, or you can defines yours
@@ -112,7 +112,7 @@ export function validatePassword({
             if (type === "symbols") {
                 str = str.split("").join("\\");
             }
-            allRegsStr += str;
+            allRegsStr += `(?=.*?[${str}])`;
             // at least 1 of value of the type
             const reg = new RegExp(`[${str}]`);
             if (reg.test(value) === false) {
@@ -154,7 +154,7 @@ export function validatePassword({
 
         // console.log(allRegsStr)
         if (!!allRegsStr) {
-            const reg = new RegExp(`^[${allRegsStr}]+$`);
+            const reg = new RegExp(`^${allRegsStr}`);
             if (reg.test(value) === false) {
                 errorCode.push("107");
             }
